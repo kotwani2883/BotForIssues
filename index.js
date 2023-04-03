@@ -7,7 +7,7 @@ const app = express();
 
 // Github API authentication
 const octokit = new Octokit({
-  auth: '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'
+  auth: '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'
 });
 
 app.use(bodyParser.json());
@@ -39,67 +39,67 @@ console.log( comment.body)
     });
 
 // 2. Comment on a specific commit
-octokit.rest.repos.createCommitComment({
-  owner,
-  repo,
-  commit_sha: payload.pull_request. merge_commit_sha,
-  body: comment,
-})
-.then(response => {
-  console.log('Comment created successfully:', response.data.html_url);
-})
-.catch(error => {
-  console.error('Error creating comment:', error);
-});
+// octokit.rest.repos.createCommitComment({
+//   owner,
+//   repo,
+//   commit_sha: payload.pull_request. merge_commit_sha,
+//   body: comment,
+// })
+// .then(response => {
+//   console.log('Comment created successfully:', response.data.html_url);
+// })
+// .catch(error => {
+//   console.error('Error creating comment:', error);
+// });
 
 //3. Write/Add a new file to the repo 
-const owner = 'OWNER_USERNAME';
-const repo = 'REPO_NAME';
-const path = 'PATH_TO_NEW_FILE'; // Include file name and extension
-const content = 'FILE_CONTENTS_HERE';
-const messagetoadd = 'COMMIT_MESSAGE_HERE';
-const branch = 'BRANCH_NAME'; // Optional - defaults to repository's default branch
+// const owner = 'OWNER_USERNAME';
+// const repo = 'REPO_NAME';
+// const path = 'PATH_TO_NEW_FILE'; // Include file name and extension
+// const content = 'FILE_CONTENTS_HERE';
+// const messagetoadd = 'COMMIT_MESSAGE_HERE';
+// const branch = 'BRANCH_NAME'; // Optional - defaults to repository's default branch
 
-octokit.rest.repos.createOrUpdateFileContents({
-  owner,
-  repo,
-  path,
-  messagetoadd,
-  content: Buffer.from(content).toString('base64'),
-  branch,
-})
-.then(response => {
-  console.log('File created successfully:', response.data.content.html_url);
-})
-.catch(error => {
-  console.error('Error creating file:', error);
-});
+// octokit.rest.repos.createOrUpdateFileContents({
+//   owner,
+//   repo,
+//   path,
+//   messagetoadd,
+//   content: Buffer.from(content).toString('base64'),
+//   branch,
+// })
+// .then(response => {
+//   console.log('File created successfully:', response.data.content.html_url);
+// })
+// .catch(error => {
+//   console.error('Error creating file:', error);
+// });
 
-// 4.Alter an existing file in the repo 
-const ownerInfo = "OWNER_USERNAME";
-const repoName = "REPO_NAME";
-const pathofFile = "FILE_PATH";
+// // 4.Alter an existing file in the repo 
+// const ownerInfo = "OWNER_USERNAME";
+// const repoName = "REPO_NAME";
+// const pathofFile = "FILE_PATH";
 
-const result = await octokit.repos.getContents({
-  ownerInfo,
-  repoName,
-  pathofFile
-});
+// const result = await octokit.repos.getContents({
+//   ownerInfo,
+//   repoName,
+//   pathofFile
+// });
 
-const file = Buffer.from(result.data.content, "base64").toString();
-const sha = result.data.sha;
-const newFile = file.replace("OLD_STRING", "NEW_STRING");
-const messageOfCommit = "Commit message";
-const contentOfFile = Buffer.from(newFile).toString("base64");
+// const file = Buffer.from(result.data.content, "base64").toString();
+// const sha = result.data.sha;
+// const newFile = file.replace("OLD_STRING", "NEW_STRING");
+// const messageOfCommit = "Commit message";
+// const contentOfFile = Buffer.from(newFile).toString("base64");
 
-await octokit.repos.createOrUpdateFileContents({
-  ownerInfo,
-  repoName,
-  pathofFile,
-  messageOfCommit,
-  contentOfFile,
-  sha
-});
+// await octokit.repos.createOrUpdateFileContents({
+//   ownerInfo,
+//   repoName,
+//   pathofFile,
+//   messageOfCommit,
+//   contentOfFile,
+//   sha
+// });
 
 
 
@@ -127,24 +127,24 @@ await octokit.repos.createOrUpdateFileContents({
 // });
 
 
-    // Push data to external app
-    const data = {
-      pull_request_number: payload.pull_request.number,
-      issueTitle: payload.pull_request.title,
-    };
+  //   // Push data to external app
+  //   const data = {
+  //     pull_request_number: payload.pull_request.number,
+  //     issueTitle: payload.pull_request.title,
+  //   };
 
-    const response = await axios.post('www.google.com', data);
+  //   const response = await axios.post('www.google.com', data);
 
-    // Update Github repository with external app response
-    const externalAppResponse = response.data;
-    const message = `External app responded with: ${externalAppResponse}`;
+  //   // Update Github repository with external app response
+  //   const externalAppResponse = response.data;
+  //   const message = `External app responded with: ${externalAppResponse}`;
 
-    await octokit.issues.createComment({
-      owner:payload.repository.owner.login,
-      repo: payload.repository.name,
-      issue_number: payload.number,
-      body: message,
-    });
+  //   await octokit.issues.createComment({
+  //     owner:payload.repository.owner.login,
+  //     repo: payload.repository.name,
+  //     issue_number: payload.number,
+  //     body: message,
+  //   });
   }
 
   res.sendStatus(200);
